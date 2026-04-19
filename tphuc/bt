@@ -1,0 +1,42 @@
+def min_swaps(arr):
+    n = len(arr)
+    left_count = 0  
+    right_count = 0  
+    for num in arr:
+        if num == 1:
+            left_count += 1
+        else:
+            right_count += 1
+
+    if left_count != n // 2 or right_count != n // 2:
+        return -1
+
+    swaps = 0
+    i = 0
+    while i < n:
+        if i % 2 == 0 and arr[i] == -1:  
+            while j < n and arr[j] == 1:  
+                j += 2
+            swaps += (j - i) // 2
+            while j > i:
+                arr[j], arr[j - 1] = arr[j - 1], arr[j]
+                j -= 2
+        elif i % 2 == 1 and arr[i] == 1: 
+            j = i + 1
+            while j < n and arr[j] == -1:  
+                j += 2
+            swaps += (j - i) // 2
+            while j > i:
+                arr[j], arr[j - 1] = arr[j - 1], arr[j]
+                j -= 2
+        i += 1
+
+    return swaps
+
+
+n = int(input())
+arr = list(map(int, input().split()))
+
+
+result = min_swaps(arr)
+print(result)
